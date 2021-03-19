@@ -1,3 +1,11 @@
+# Copyright (c) 2021 Gu Xiaoyu
+# Frameworks-Benchmark is licensed under Mulan PSL v2.
+# You can use this software according to the terms and conditions of the Mulan PSL v2. 
+# You may obtain a copy of Mulan PSL v2 at:
+#          http://license.coscl.org.cn/MulanPSL2 
+# THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT, MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.  
+# See the Mulan PSL v2 for more details.
+
 FROM php:8.0-fpm-buster
 RUN sed -i 's/deb.debian.org/mirrors.aliyun.com/g' /etc/apt/sources.list; \
     sed -i 's/security.debian.org/mirrors.aliyun.com/g' /etc/apt/sources.list
