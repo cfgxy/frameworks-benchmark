@@ -6,23 +6,23 @@ CPU: Intel(R) Xeon(R) CPU E5-2609 v2 @ 2.50GHz
 
 **容器限制:** 
 
-CPU: 2核
+CPU: 2核  
 内存: 4G
 
 
 
 **配置优化:**
 
-PHP: 8.0
-Opcache: On
-JIT: On
+PHP: 8.0  
+Opcache: On  
+JIT: On  
 Preloading: 预加载常用类
 
 **测试方法:**
 
-ab -k -c 50 -n 50000 $URL
-最大并发: 50
-次数: 50000
+ab -k -c 50 -n 50000 $URL  
+最大并发: 50  
+次数: 50000  
 KeepAlive: On
 
 
