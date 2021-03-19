@@ -1,0 +1,31 @@
+{
+    "name": "ahjob/app",
+    "type": "project",
+    "repositories": {
+        "packagist": {
+            "type": "composer",
+            "url": "https://mirrors.aliyun.com/composer/"
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "": "src/"
+        }
+    },
+    "config": {
+        "optimize-autoloader": true,
+        "preferred-install": "dist",
+        "sort-packages": true
+    },
+    "require": {
+        "ext-zend-opcache": "*",
+        "illuminate/container": "^8.32",
+        "illuminate/database": "^8.32",
+        "nyholm/psr7": "^1.4",
+        "nyholm/psr7-server": "^1.0",
+        "php-http/discovery": "^1.13",
+        "php-http/guzzle6-adapter": "^2.0",
+        "slim/http": "^1.2",
+        "slim/slim": "^4.0"
+    }
+}

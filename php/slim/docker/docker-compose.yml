@@ -1,0 +1,21 @@
+version: '3.9'
+services:
+  php80:
+    image: local-php80:slim
+    volumes:
+      #- $PWD/..:/home/httpd/www
+      - $PWD/extras/www.ini:/usr/local/etc/php-fpm.d/www.conf
+      - $PWD/extras/php.ini:/usr/local/etc/php/conf.d/docker.ini
+    deploy:
+      resources:
+        limits:
+          cpus: 2
+          memory: 4G
+
+  nginx:
+    image: nginx:alpine
+    volumes:
+      - $PWD/..:/home/httpd/www
+      - $PWD/extras/default.conf:/etc/nginx/conf.d/default.conf
+    ports:
+      - 8884:80
