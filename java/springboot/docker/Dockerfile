@@ -1,9 +1,13 @@
-FROM maven:3.6.3-openjdk-16
-WORKDIR /opt/app
-COPY . .
-RUN --mount=type=cache,target=.m2 mvn package -T 8 -am -Dmaven.repo.local=.m2 -Dmaven.test.skip=true
+# syntax = docker/dockerfile:1.2
+FROM maven:3.6.3-openjdk-16 as builder
+WORKDIR /opt/app/src
+RUN --mount=type=cache,target=/root/.m2 \
+    --mount=type=bind,target=/opt/app/src,rw \
+    mvn package -T 8 -am -Dmaven.test.skip=true \
+    && cp -ap /opt/app/src/target/demo-*.jar /opt/app/src/target/lib /opt/app \
+    && mv /opt/app/demo-*.jar /opt/app/app.jar
 
-FROM openjdk:16-jdk-slim-buster
+FROM openjdk:16-jdk-slim-buster as runner
 
 RUN  sed -i s/deb.debian.org/mirrors.aliyun.com/ /etc/apt/sources.list \
     && sed -i s/security.debian.org/mirrors.aliyun.com/ /etc/apt/sources.list \
@@ -24,13 +28,10 @@ ENV  LC_ALL=zh_CN.UTF-8
 COPY docker/msyh.ttc /usr/share/fonts/myfonts/msyh.ttc
 RUN  fc-cache -fv
 
-COPY target/lib /opt/app/lib
+COPY --from=builder /opt/app /opt/app
 RUN  chown www-data:www-data -R /opt/app
 
-COPY --from=0 /opt/app/target/demo-*.jar /opt/app/app.jar
 WORKDIR /opt/app
-RUN  chown www-data:www-data /opt/app/app.jar
-
 USER www-data
 
 CMD exec java $JAVA_OPTS -cp "app.jar:./lib/*" com.example.demo.DemoApplication

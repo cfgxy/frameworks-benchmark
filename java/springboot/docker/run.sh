@@ -7,5 +7,5 @@
 # THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT, MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.  
 # See the Mulan PSL v2 for more details.
 
-DOCKER_BUILDKIT=1 docker build -t java-local:springboot -f Dockerfile ..
+DOCKER_BUILDKIT=1 docker build --target=runner -t java-local:springboot -f Dockerfile ..
 docker-compose up -d
