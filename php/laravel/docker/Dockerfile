@@ -19,6 +19,7 @@ RUN apt install -y unzip
 WORKDIR /home/httpd/www
 COPY . .
 RUN php composer.phar install --no-dev --prefer-dist --optimize-autoloader  
+RUN ./artisan optimize
 
 RUN mkdir -p "/home/httpd/www/storage/framework/cache" "/home/httpd/www/storage/framework/sessions" "/home/httpd/www/storage/logs"
 RUN chown -R www-data:www-data /home/httpd/www/storage
