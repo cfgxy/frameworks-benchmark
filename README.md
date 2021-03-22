@@ -39,4 +39,5 @@ HelloWorld:
 | php: Slim 4.0 (with Nyholm/psr7) | 1756  | 106             | 75              | 297              |
 | go: Gin 1.6                      | 20108 | 16              | 7               | 59               |
 | java: Springboot 2.4             | 9155  | 33              | 15              | 55               |
+| java: quarkus 1.12               | 37163 | 9               | 4               | 38               |
 
