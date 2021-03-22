@@ -25,6 +25,8 @@ ENV  LANG=zh_CN.UTF-8
 ENV  LANGUAGE=zh_CN:en_US:en
 ENV  LC_ALL=zh_CN.UTF-8
 
+RUN echo "securerandom.source=file:/dev/./urandom" >> /usr/local/openjdk-16/conf/security/java.security
+
 COPY docker/msyh.ttc /usr/share/fonts/myfonts/msyh.ttc
 RUN  fc-cache -fv
 
