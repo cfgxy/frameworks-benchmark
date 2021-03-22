@@ -38,4 +38,5 @@ HelloWorld:
 | php: Lumen 8.0                   | 1508  | 125             | 83              | 557              |
 | php: Slim 4.0 (with Nyholm/psr7) | 1756  | 106             | 75              | 297              |
 | go: Gin 1.6                      | 20108 | 16              | 7               | 59               |
+| java: Springboot 2.4             | 9155  | 33              | 15              | 55               |
 
