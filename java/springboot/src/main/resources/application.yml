@@ -1,0 +1,16 @@
+spring:
+  mvc:
+    servlet:
+      load-on-startup: 0
+
+  main:
+    lazy-initialization: false
+
+server:
+  tomcat:
+    accept-count: 2000
+    threads:
+      max: 500
+    accesslog:
+      enabled: true
+      pattern: '%h %l %u %t "%r" %s %b "%{Referer}i" "%{User-Agent}i" %Dms'
