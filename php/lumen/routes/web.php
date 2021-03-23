@@ -20,3 +20,5 @@ $router->get('/', function () use ($router) {
 $router->get('/hello', function () use ($router) {
     return "Hello World";
 });
+
+$router->get('/orm', '\App\Http\Controllers\ExampleController@orm');

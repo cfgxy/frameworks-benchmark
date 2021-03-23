@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CommonType;
+
 class ExampleController extends Controller
 {
     /**
@@ -12,6 +14,13 @@ class ExampleController extends Controller
     public function __construct()
     {
         //
+        
+    }
+    
+    public function orm()
+    {
+        $a = CommonType::query()->where("type_id", 1)->first();
+        return "Hello {$a->type_name}";
     }
 
     //
