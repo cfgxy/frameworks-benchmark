@@ -6,6 +6,28 @@ spring:
   main:
     lazy-initialization: false
 
+
+
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    url: jdbc:mysql://192.168.3.8:3306/ahjob?zeroDateTimeBehavior=convertToNull&serverTimezone=UTC&useUnicode=true&characterEncoding=utf-8&useSSL=false&useCursorFetch=true&rewriteBatchedStatements=true
+    username: root
+    password:
+    hikari:
+      minimum-idle: 0
+      maximum-pool-size: 120
+      idle-timeout: 60000
+      max-lifetime: 7200000
+      connection-test-query: "SELECT 1"
+      connection-init-sql: "SET wait_timeout=90"
+      driver-class-name: com.mysql.cj.jdbc.Driver
+
+
+  jpa:
+    hibernate:
+      connection:
+        provider-class: org.hibernate.hikaricp.internal.HikariCPConnectionProvider
+
 server:
   undertow:
     threads:
