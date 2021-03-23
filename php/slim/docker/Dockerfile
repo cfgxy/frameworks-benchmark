@@ -13,6 +13,7 @@ RUN apt-get update -y
 RUN apt install -y libicu-dev
 RUN docker-php-ext-install intl
 RUN docker-php-ext-install opcache
+RUN docker-php-ext-install pdo_mysql
 
 RUN apt install -y unzip
 
