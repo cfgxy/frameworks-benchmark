@@ -22,7 +22,7 @@
         "ext-zend-opcache": "*",
         "doctrine/orm": "^2.8",
         "illuminate/container": "^8.32",
-        "illuminate/database": "^8.32",
+        "illuminate/database": "^8.33",
         "nyholm/psr7": "^1.4",
         "nyholm/psr7-server": "^1.0",
         "php-http/discovery": "^1.13",

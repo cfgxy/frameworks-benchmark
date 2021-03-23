@@ -11,6 +11,7 @@
 
 namespace Ahjob\Demo\Controller;
 
+use Ahjob\Demo\Models\CommonType;
 use Ahjob\Demo\Models\Propel\Base\CommonTypeForPropelQuery;
 use Ahjob\Demo\Service\Demo2Service;
 use Ahjob\Demo\Service\DemoService;
@@ -29,6 +30,7 @@ use Slim\Http\ServerRequest as Request;
  * @property Demo2Service $demo2
  * @property EntityManager $doctrine
  * @property ServiceContainerInterface $propel
+ * @property $eloquent
  */
 class DemoController
 {
@@ -75,6 +77,14 @@ class DemoController
         $t = CommonTypeForPropelQuery::create()
             ->findOneByTypeId(1);
         $response->write(sprintf("Hello {$t->getTypeName()}, from propel"));
+        return $response;
+    }
+
+    public function eloquent(Request $request, Response $response, array $args): ResponseInterface
+    {
+        $eloquent = $this->eloquent;
+        $t = CommonType::query()->where("type_id", 1)->first();
+        $response->write("Hello {$t->type_name}, from eloquent");
         return $response;
     }
     

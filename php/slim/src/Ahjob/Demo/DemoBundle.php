@@ -18,6 +18,9 @@ use Ahjob\Demo\Service\Demo2Service;
 use Ahjob\Demo\Service\DemoService;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Tools\Setup;
+use Illuminate\Container\Container;
+use Illuminate\Database\Capsule\Manager;
+use Slim\Routing\Dispatcher;
 
 class DemoBundle extends Bundle
 {
@@ -98,4 +101,27 @@ class DemoBundle extends Bundle
             $ormConf
         );
     }
+
+    #[Attrs\Service('eloquent')]
+    public function provideEloquent()
+    {
+
+        $capsule = new Manager();
+
+        $capsule->addConnection([
+            'driver'    => 'mysql',
+            'host'      => env('DB_HOST', 'localhost'),
+            'database'  => env('DB_DATABASE', 'test'),
+            'username'  => env('DB_USERNAME', 'root'),
+            'password'  => '',
+            'charset'   => 'utf8',
+            'collation' => 'utf8_unicode_ci',
+            'prefix'    => '',
+        ]);
+
+        $capsule->setAsGlobal();
+        $capsule->bootEloquent();
+        return $capsule;
+    }
+    
 }
