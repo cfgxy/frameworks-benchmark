@@ -80,10 +80,6 @@ class DemoController
     
     public function __get($name)
     {
-        if ($this->ci->has($name)) {
-            return $this->ci->get($name);
-        }
-        
-        return null;
+        return $this->ci->get($name);
     }
 }
