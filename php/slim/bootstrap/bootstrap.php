@@ -16,6 +16,12 @@ require APP_ROOT . '/vendor/autoload.php';
 use Illuminate\Container\Container;
 use Slim\Factory\AppFactory;
 
+\Dotenv\Dotenv::create(
+    \Illuminate\Support\Env::getRepository(), 
+    APP_ROOT, 
+    '.env'
+)->safeLoad();
+
 $ci = Container::getInstance();
 $app = AppFactory::create(null, $ci);
 

@@ -12,6 +12,7 @@
             "": "src/"
         }
     },
+    "minimum-stability": "alpha",
     "config": {
         "optimize-autoloader": true,
         "preferred-install": "dist",
@@ -19,13 +20,16 @@
     },
     "require": {
         "ext-zend-opcache": "*",
+        "doctrine/orm": "^2.8",
         "illuminate/container": "^8.32",
         "illuminate/database": "^8.32",
         "nyholm/psr7": "^1.4",
         "nyholm/psr7-server": "^1.0",
         "php-http/discovery": "^1.13",
         "php-http/guzzle6-adapter": "^2.0",
+        "propel/propel": "^2.0@alpha",
         "slim/http": "^1.2",
-        "slim/slim": "^4.0"
+        "slim/slim": "^4.0",
+        "vlucas/phpdotenv": "^5.3"
     }
 }

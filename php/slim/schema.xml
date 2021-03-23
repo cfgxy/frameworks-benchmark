@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<database name="default" defaultIdMethod="native" namespace="Ahjob\Demo\Models\Propel" defaultPhpNamingMethod="underscore">
+    <table name="t_types" idMethod="native" phpName="CommonTypeForPropel">
+        <column name="type_id" phpName="TypeId" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
+        <column name="parent_id" phpName="ParentId" type="INTEGER" required="true" defaultValue="0"/>
+        <column name="left_seq" phpName="LeftSeq" type="INTEGER" required="true" defaultValue="0"/>
+        <column name="right_seq" phpName="RightSeq" type="INTEGER" required="true" defaultValue="0"/>
+        <column name="level" phpName="Level" type="SMALLINT" required="true" defaultValue="0"/>
+        <column name="type_name" phpName="TypeName" type="VARCHAR" size="60" required="true" defaultValue=""/>
+        <column name="node_path" phpName="NodePath" type="VARCHAR" size="30" required="true" defaultValue=""/>
+        <column name="file_js" phpName="FileJs" type="INTEGER" required="true" defaultValue="0"/>
+        <column name="file_php" phpName="FilePhp" type="INTEGER" required="true" defaultValue="0"/>
+        <column name="type_show" phpName="TypeShow" type="TINYINT" required="true" defaultValue="0"/>
+        <index name="type_name">
+            <index-column name="type_name"/>
+        </index>
+        <index name="left_seq">
+            <index-column name="left_seq"/>
+        </index>
+        <index name="right_seq">
+            <index-column name="right_seq"/>
+        </index>
+        <index name="ix_npath">
+            <index-column name="node_path"/>
+        </index>
+        <vendor type="mysql">
+            <parameter name="Engine" value="InnoDB"/>
+        </vendor>
+    </table>
+</database>

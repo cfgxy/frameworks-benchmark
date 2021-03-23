@@ -11,8 +11,11 @@
 
 namespace Ahjob\Demo\Controller;
 
+use Ahjob\Demo\Models\Propel\Base\CommonTypeForPropelQuery;
 use Ahjob\Demo\Service\Demo2Service;
 use Ahjob\Demo\Service\DemoService;
+use Doctrine\ORM\EntityManager;
+use Propel\Runtime\ServiceContainer\ServiceContainerInterface;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseInterface;
 use Slim\Http\Response;
@@ -24,6 +27,8 @@ use Slim\Http\ServerRequest as Request;
  *
  * @property DemoService $demo
  * @property Demo2Service $demo2
+ * @property EntityManager $doctrine
+ * @property ServiceContainerInterface $propel
  */
 class DemoController
 {
@@ -53,6 +58,26 @@ class DemoController
     {
         $response->write('Hello World');
         return $response;
+    }
+
+    public function orm(Request $request, Response $response, array $args): ResponseInterface
+    {
+        $orm = env('APP_ORM');
+        if ($orm === 'doctrine') {
+            $t = $this->doctrine->getRepository('Main:CommonTypeForDoctrine')
+                ->find(1);
+
+            $response->write(sprintf("Hello {$t->getTypeName()}, from doctrine"));
+            return $response;
+        } elseif ($orm === 'propel') {
+            $propel = $this->propel;
+            $t = CommonTypeForPropelQuery::create()
+                ->findOneByTypeId(1);
+            $response->write(sprintf("Hello {$t->getTypeName()}, from propel"));
+            return $response;
+        }
+        
+        throw new \Exception();
     }
     
     public function __get($name)

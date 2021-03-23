@@ -1,0 +1,13 @@
+propel:
+  database:
+    connections:
+      default:
+        adapter: mysql
+        dsn: mysql:host=192.168.3.8;port=3306;dbname=ahjob
+        user: root
+        password:
+        settings:
+          charset: utf8
+
+  paths:
+    phpDir: src
