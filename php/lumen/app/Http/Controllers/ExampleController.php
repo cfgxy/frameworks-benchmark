@@ -22,18 +22,21 @@ class ExampleController extends Controller
     
     public function orm()
     {
+        $orm = env('APP_ORM');
+        if ($orm === 'eloquent') {
+            //Eloquent
+            $t = CommonType::query()->where("type_id", 1)->first();
+            return "Hello {$t->type_name}, from eloquent";
+        } elseif ($orm === 'doctrine') {
+            //Doctrine
+            /** @var EntityManager $em */
+            $em = app('em');
+            $repo = $em->getRepository('Main:CommonTypeForDoctrine');
+            $t = $repo->find(1);
+            return "Hello {$t->getTypeName()}, from doctrine";
+        }
         
-        //Eloquent
-        //$t = CommonType::query()->where("type_id", 1)->first();
-        //return "Hello {$t->type_name}";
-
-
-        //Doctrine
-        /** @var EntityManager $em */
-        $em = app('em');
-        $repo = $em->getRepository('Main:CommonTypeForDoctrine');
-        $t = $repo->find(1);
-        return "Hello {$t->getTypeName()}";
+        throw new \Exception();
     }
 
     //
