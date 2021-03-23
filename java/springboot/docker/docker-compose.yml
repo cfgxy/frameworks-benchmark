@@ -15,5 +15,7 @@ services:
         limits:
           cpus: 2
           memory: 4G
+    environment:
+      - JAVA_OPTS=-XX:CICompilerCount=2 -XX:CompressedClassSpaceSize=120m -XX:G1ConcRefinementThreads=4 -XX:InitialHeapSize=256m -XX:MaxDirectMemorySize=128m -XX:MaxHeapSize=3840m -XX:MaxMetaspaceSize=180m -XX:StringDeduplicationAgeThreshold=7 -XX:+UseCompressedClassPointers -XX:+UseCompressedOops -XX:+UseG1GC -XX:+UseStringDeduplication -XX:MaxGCPauseMillis=80 -Xlog:gc*,gc+phases=debug:file=/opt/app/logs/gc.log:tags,time,uptime,level:filecount=5,filesize=20M
     ports:
       - 8886:8080
