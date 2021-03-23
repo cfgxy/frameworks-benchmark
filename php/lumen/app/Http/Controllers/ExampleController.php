@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\CommonType;
 use App\Models\Doctrine\CommonTypeForDoctrine;
+use App\Models\Propel\CommonTypeForPropelQuery;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\QueryBuilder;
 
@@ -34,6 +35,12 @@ class ExampleController extends Controller
             $repo = $em->getRepository('Main:CommonTypeForDoctrine');
             $t = $repo->find(1);
             return "Hello {$t->getTypeName()}, from doctrine";
+        } elseif ($orm === 'propel') {
+            /** @var \Propel\Runtime\Connection\ConnectionInterface $propel */
+            $propel = app('propel');
+            $t = CommonTypeForPropelQuery::create()
+                ->findOneByTypeId(1);
+            return "Hello {$t->getTypeName()}, from propel";
         }
         
         throw new \Exception();

@@ -40,5 +40,40 @@ class AppServiceProvider extends ServiceProvider
                 $ormConf
             );
         });
+        
+        $this->app->singleton('propel', function () {
+            $serviceContainer = \Propel\Runtime\Propel::getServiceContainer();
+            $serviceContainer->checkVersion('2.0.0-dev');
+            $serviceContainer->setAdapterClass('default', 'mysql');
+            $manager = new \Propel\Runtime\Connection\ConnectionManagerSingle();
+            $manager->setConfiguration(array (
+                'dsn' => sprintf(
+                    'mysql:host=%s;port=3306;dbname=%s',
+                    env('DB_HOST', 'localhost'),
+                    env('DB_DATABASE', 'test')
+                ),
+                'user' => env('DB_USERNAME', 'root'),
+                'password' => '',
+                'settings' =>
+                    array (
+                        'charset' => 'utf8',
+                        'queries' =>
+                            array (
+                            ),
+                    ),
+                'classname' => '\\Propel\\Runtime\\Connection\\ConnectionWrapper',
+                'model_paths' =>
+                    array (
+                        'src',
+                        'app',
+                        'vendor',
+                    ),
+            ));
+            $manager->setName('default');
+            $serviceContainer->setConnectionManager('default', $manager);
+            $serviceContainer->setDefaultDatasource('default');
+
+            return $serviceContainer;
+        });
     }
 }
