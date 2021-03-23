@@ -3,10 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\CommonType;
-use App\Models\Doctrine\CommonTypeForDoctrine;
 use App\Models\Propel\CommonTypeForPropelQuery;
 use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\QueryBuilder;
 
 class ExampleController extends Controller
 {
@@ -21,30 +19,31 @@ class ExampleController extends Controller
         
     }
     
-    public function orm()
+    public function eloquent()
     {
-        $orm = env('APP_ORM');
-        if ($orm === 'eloquent') {
-            //Eloquent
-            $t = CommonType::query()->where("type_id", 1)->first();
-            return "Hello {$t->type_name}, from eloquent";
-        } elseif ($orm === 'doctrine') {
-            //Doctrine
-            /** @var EntityManager $em */
-            $em = app('em');
-            $repo = $em->getRepository('Main:CommonTypeForDoctrine');
-            $t = $repo->find(1);
-            return "Hello {$t->getTypeName()}, from doctrine";
-        } elseif ($orm === 'propel') {
-            /** @var \Propel\Runtime\Connection\ConnectionInterface $propel */
-            $propel = app('propel');
-            $t = CommonTypeForPropelQuery::create()
-                ->findOneByTypeId(1);
-            return "Hello {$t->getTypeName()}, from propel";
-        }
-        
-        throw new \Exception();
+        app()->withEloquent();
+        //Eloquent
+        $t = CommonType::query()->where("type_id", 1)->first();
+        return "Hello {$t->type_name}, from eloquent";
     }
 
-    //
+    public function propel()
+    {
+        /** @var \Propel\Runtime\Connection\ConnectionInterface $propel */
+        $propel = app('propel');
+        $t = CommonTypeForPropelQuery::create()
+            ->findOneByTypeId(1);
+        return "Hello {$t->getTypeName()}, from propel";
+    }
+
+    public function doctrine()
+    {
+        //Doctrine
+        /** @var EntityManager $em */
+        $em = app('em');
+        $repo = $em->getRepository('Main:CommonTypeForDoctrine');
+        $t = $repo->find(1);
+        return "Hello {$t->getTypeName()}, from doctrine";
+    }
+
 }

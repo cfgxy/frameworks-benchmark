@@ -21,4 +21,6 @@ $router->get('/hello', function () use ($router) {
     return "Hello World";
 });
 
-$router->get('/orm', '\App\Http\Controllers\ExampleController@orm');
+$router->get('/eloquent', '\App\Http\Controllers\ExampleController@eloquent');
+$router->get('/doctrine', '\App\Http\Controllers\ExampleController@doctrine');
+$router->get('/propel', '\App\Http\Controllers\ExampleController@propel');

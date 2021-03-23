@@ -23,11 +23,8 @@ $app = new Laravel\Lumen\Application(
     dirname(__DIR__)
 );
 
-$app->withFacades();
-if (env('APP_ORM') === 'eloquent') {
-    $app->withEloquent();
-    \Illuminate\Support\Facades\DB::enableQueryLog();
-}
+//$app->withFacades();
+//$app->withEloquent();
 
 /*
 |--------------------------------------------------------------------------
