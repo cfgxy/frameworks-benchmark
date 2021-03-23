@@ -10,15 +10,43 @@
 
 package main
 
-import "github.com/gin-gonic/gin"
+import (
+	"fmt"
+	"github.com/gin-gonic/gin"
+	"gorm.io/driver/mysql"
+	"gorm.io/gorm"
+	"time"
+)
 
 func main() {
 	r := gin.Default()
+
+	dsn := "root@tcp(192.168.3.8:3306)/ahjob?charset=utf8mb4&parseTime=True&loc=Local"
+	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
+
+	if err == nil && db != nil {
+		sqlDb, e := db.DB()
+		if e == nil && sqlDb != nil {
+			sqlDb.SetMaxIdleConns(50)
+			sqlDb.SetMaxOpenConns(1000)
+			sqlDb.SetConnMaxIdleTime(30)
+			sqlDb.SetConnMaxLifetime(time.Hour)
+		}
+	}
+
 	r.GET("/hello", func(c *gin.Context) {
 		//c.JSON(200, gin.H{
 		//	"message": "Hello World!",
 		//})
 		c.String(200, "Hello World")
 	})
+
+	r.GET("/gorm", func(c *gin.Context) {
+		var t CommonType
+		db.First(&t, 1)
+		c.String(200, fmt.Sprintf("Hello %s, from gorm", t.TypeName))
+	})
+
 	r.Run()
 }
+
