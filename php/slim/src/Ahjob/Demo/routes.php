@@ -13,4 +13,5 @@
 
 $app->get('/demo', 'Ahjob\Demo\Controller\DemoController');
 $app->get('/hello', 'Ahjob\Demo\Controller\DemoController:hello');
-$app->get('/orm', 'Ahjob\Demo\Controller\DemoController:orm');
+$app->get('/doctrine', 'Ahjob\Demo\Controller\DemoController:doctrine');
+$app->get('/propel', 'Ahjob\Demo\Controller\DemoController:propel');

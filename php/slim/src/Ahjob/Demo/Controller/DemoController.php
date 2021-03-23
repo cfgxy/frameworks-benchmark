@@ -60,24 +60,22 @@ class DemoController
         return $response;
     }
 
-    public function orm(Request $request, Response $response, array $args): ResponseInterface
+    public function doctrine(Request $request, Response $response, array $args): ResponseInterface
     {
-        $orm = env('APP_ORM');
-        if ($orm === 'doctrine') {
-            $t = $this->doctrine->getRepository('Main:CommonTypeForDoctrine')
-                ->find(1);
+        $t = $this->doctrine->getRepository('Main:CommonTypeForDoctrine')
+            ->find(1);
 
-            $response->write(sprintf("Hello {$t->getTypeName()}, from doctrine"));
-            return $response;
-        } elseif ($orm === 'propel') {
-            $propel = $this->propel;
-            $t = CommonTypeForPropelQuery::create()
-                ->findOneByTypeId(1);
-            $response->write(sprintf("Hello {$t->getTypeName()}, from propel"));
-            return $response;
-        }
-        
-        throw new \Exception();
+        $response->write(sprintf("Hello {$t->getTypeName()}, from doctrine"));
+        return $response;
+    }
+
+    public function propel(Request $request, Response $response, array $args): ResponseInterface
+    {
+        $propel = $this->propel;
+        $t = CommonTypeForPropelQuery::create()
+            ->findOneByTypeId(1);
+        $response->write(sprintf("Hello {$t->getTypeName()}, from propel"));
+        return $response;
     }
     
     public function __get($name)
