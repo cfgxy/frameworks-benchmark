@@ -32,7 +32,9 @@ RUN  fc-cache -fv
 
 COPY --from=builder /opt/app /opt/app
 RUN  chown www-data:www-data -R /opt/app
+RUN  mkdir /opt/app/logs && chmod a+rwX /opt/app/logs
 
+VOLUME [ "/opt/app/logs" ]
 WORKDIR /opt/app
 USER www-data
 
