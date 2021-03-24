@@ -32,7 +32,9 @@ RUN echo "securerandom.source=file:/dev/./urandom" >> /usr/local/openjdk-16/conf
 
 COPY docker/msyh.ttc /usr/share/fonts/myfonts/msyh.ttc
 RUN  fc-cache -fv
+RUN  mkdir /opt/app/logs && chmod a+rwX /opt/app/logs
 
+VOLUME [ "/opt/app/logs" ]
 WORKDIR /opt/app
 USER www-data
 
