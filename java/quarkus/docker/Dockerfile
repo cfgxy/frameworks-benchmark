@@ -41,10 +41,7 @@ USER www-data
 ENV JAVA_INIT_MEM_RATIO=40 \
     JAVA_MAX_MEM_RATIO=85 \
     JAVA_OPTIONS="\
-        -XX:CompressedClassSpaceSize=120m -XX:MaxMetaspaceSize=180m \
-        -XX:+UseStringDeduplication -XX:StringDeduplicationAgeThreshold=7 \
-        -XX:+UseCompressedClassPointers -XX:+UseCompressedOops \
-        -XX:+UseG1GC -XX:MaxGCPauseMillis=80 \
+        -XX:+UseZGC \
         -Xlog:gc*,gc+phases=debug:file=/opt/app/logs/gc.log:tags,time,uptime,level:filecount=5,filesize=20M \
         -Dquarkus.http.host=0.0.0.0 -Djava.util.logging.manager=org.jboss.logmanager.LogManager"
 
