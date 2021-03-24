@@ -24,6 +24,10 @@ ENV  LANG=zh_CN.UTF-8
 ENV  LANGUAGE=zh_CN:en_US:en
 ENV  LC_ALL=zh_CN.UTF-8
 
+RUN  apt-get install -y procps
+
+COPY --chown=www-data docker/run-java.sh /opt/app/
+RUN chmod 540 /opt/app/run-java.sh
 RUN echo "securerandom.source=file:/dev/./urandom" >> /usr/local/openjdk-16/conf/security/java.security
 
 COPY docker/msyh.ttc /usr/share/fonts/myfonts/msyh.ttc
@@ -32,14 +36,21 @@ RUN  fc-cache -fv
 WORKDIR /opt/app
 USER www-data
 
-ENV JAVA_OPTIONS="-Dquarkus.http.host=0.0.0.0 -Djava.util.logging.manager=org.jboss.logmanager.LogManager"
-COPY --chown=www-data docker/run-java.sh /opt/app/
+ENV JAVA_INIT_MEM_RATIO=40 \
+    JAVA_MAX_MEM_RATIO=85 \
+    JAVA_OPTIONS="\
+        -XX:CompressedClassSpaceSize=120m -XX:MaxMetaspaceSize=180m \
+        -XX:+UseStringDeduplication -XX:StringDeduplicationAgeThreshold=7 \
+        -XX:+UseCompressedClassPointers -XX:+UseCompressedOops \
+        -XX:+UseG1GC -XX:MaxGCPauseMillis=80 \
+        -Xlog:gc*,gc+phases=debug:file=/opt/app/logs/gc.log:tags,time,uptime,level:filecount=5,filesize=20M \
+        -Dquarkus.http.host=0.0.0.0 -Djava.util.logging.manager=org.jboss.logmanager.LogManager"
+
 COPY --from=builder --chown=www-data /opt/app/quarkus-app/lib/ /opt/app/lib/
 COPY --from=builder --chown=www-data /opt/app/quarkus-app/*.jar /opt/app/
 COPY --from=builder --chown=www-data /opt/app/quarkus-app/app/ /opt/app/app/
 COPY --from=builder --chown=www-data /opt/app/quarkus-app/quarkus/ /opt/app/quarkus/
 
-RUN chmod 540 /opt/app/run-java.sh
 
 EXPOSE 8080
 ENTRYPOINT [ "/opt/app/run-java.sh" ]
