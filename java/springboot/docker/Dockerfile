@@ -25,6 +25,8 @@ ENV  LANG=zh_CN.UTF-8
 ENV  LANGUAGE=zh_CN:en_US:en
 ENV  LC_ALL=zh_CN.UTF-8
 
+COPY --chown=www-data docker/run-java.sh /opt/app/
+RUN chmod 540 /opt/app/run-java.sh
 RUN echo "securerandom.source=file:/dev/./urandom" >> /usr/local/openjdk-16/conf/security/java.security
 
 COPY docker/msyh.ttc /usr/share/fonts/myfonts/msyh.ttc
@@ -38,4 +40,17 @@ VOLUME [ "/opt/app/logs" ]
 WORKDIR /opt/app
 USER www-data
 
-CMD exec java $JAVA_OPTS -cp "app.jar:./lib/*" com.example.demo.DemoApplication
+ENV JAVA_APP_JAR=/opt/app/app.jar \
+    JAVA_LIB_DIR=/opt/app/lib/* \
+    JAVA_MAIN_CLASS=com.example.demo.DemoApplication \
+    JAVA_INIT_MEM_RATIO=40 \
+    JAVA_MAX_MEM_RATIO=85 \
+    JAVA_OPTIONS="\
+        -XX:CompressedClassSpaceSize=120m -XX:MaxMetaspaceSize=180m \
+        -XX:+UseStringDeduplication -XX:StringDeduplicationAgeThreshold=7 \
+        -XX:+UseCompressedClassPointers -XX:+UseCompressedOops \
+        -XX:+UseG1GC -XX:MaxGCPauseMillis=80 \
+        -Xlog:gc*,gc+phases=debug:file=/opt/app/logs/gc.log:tags,time,uptime,level:filecount=5,filesize=20M"
+
+EXPOSE 8080
+ENTRYPOINT [ "/opt/app/run-java.sh" ]
